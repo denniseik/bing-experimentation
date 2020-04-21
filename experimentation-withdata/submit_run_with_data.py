@@ -16,6 +16,7 @@ COMPUTE_TARGET = "myamlcompute" # local / myamlcompute
 workspace = Workspace.from_config(auth=AzureCliAuthentication())
 
 # Define the Datasets that we would like to pass with our run
+# NOTE: A helper file upload_sample_data.py is available to the below sample data available in a new workspace.
 def_blob_store = workspace.get_default_datastore()
 input_data = DataReference(
     datastore=def_blob_store,
