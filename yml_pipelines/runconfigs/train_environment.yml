@@ -1,0 +1,38 @@
+{
+    "name": "trainingenvironment",
+    "version": null,
+    "environmentVariables": {
+    },
+    "python": {
+        "userManagedDependencies": false,
+        "interpreterPath": "python",
+        "condaDependenciesFile": "../../conda_dependencies.yml",
+        "baseCondaEnvironment": null
+    },
+    "docker": {
+        "enabled": false,
+        "baseImage": "mcr.microsoft.com/azureml/base:intelmpi2018.3-ubuntu16.04",
+        "baseDockerfile": null,
+        "sharedVolumes": true,
+        "shmSize": "2g",
+        "arguments": [],
+        "baseImageRegistry": {
+            "address": null,
+            "username": null,
+            "password": null
+        }
+    },
+    "spark": {
+        "repositories": [],
+        "packages": [],
+        "precachePackages": true
+    },
+    "databricks": {
+        "mavenLibraries": [],
+        "pypiLibraries": [],
+        "rcranLibraries": [],
+        "jarLibraries": [],
+        "eggLibraries": []
+    },
+    "inferencingStackVersion": null
+}

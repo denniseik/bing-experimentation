@@ -23,10 +23,10 @@ est = Estimator(
     compute_target=COMPUTE_TARGET,
     use_docker=False,
     user_managed=True,
-    # script_params={  
-    #     '--max-depth': 3,  
-    #     '--min-samples-leaf': 2
-    # }  
+    script_params={
+        '--max-depth': 3,  
+        '--min-samples-leaf': 2
+    },
     # conda_dependencies_file=os.path.join(
     #     os.path.dirname(os.path.realpath(__file__)),
     #     '../',

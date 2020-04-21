@@ -21,4 +21,4 @@ args = parser.parse_args()
 print("Input data folder: %s" % args.input_data)
 print("Output data folder: %s" % args.output_data)
 
-print("My training runner file")
+print("My model conversion runner file")

@@ -1,0 +1,15 @@
+pipeline:
+  description: SamplePipelineFromYaml
+  default_compute: myamlcompute
+  parameters: {}
+  data_references: {}
+  steps:
+    Step1:
+      type: "PythonScriptStep"
+      name: "MyPythonScriptStep"
+      runconfig: "pipelines/runconfigs/train_runconfig.yml"
+      script_name: "train_multiple.py"
+      allow_reuse: True
+      source_directory: "experimentation/code/modeling/"
+      inputs: {}
+      outputs: {}

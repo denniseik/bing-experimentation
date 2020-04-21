@@ -19,15 +19,10 @@ from sklearn.externals import joblib
 from helpers import plot_confusion_matrix
 from azureml.core import Run
 
-run = Run.get_context()
-
-
-# Define ouputs folder
 OUTPUTSFOLDER = "outputs"
 
-# create outputs folder if not exists
-if not os.path.exists(OUTPUTSFOLDER):
-    os.makedirs(OUTPUTSFOLDER)
+# Get the Azure ML Run context
+run = Run.get_context()
 
 # Fetch data over HTTP
 categories = [
@@ -47,7 +42,6 @@ data_test = fetch_20newsgroups(subset='test', categories=categories,
 y_train, y_test = data_train.target, data_test.target
 
 # Extracting features from the training data using a sparse vectorizer
-
 vectorizer = TfidfVectorizer(sublinear_tf=True, 
                              max_df=0.5,
                              stop_words='english')
@@ -61,8 +55,9 @@ def benchmark(clf, name=""):
 
     # create a child run for Azure ML logging
     child_run = run.child_run(name=name)
+    child_run.log("ClassifierName", name)
 
-    # train a model
+    # train a classifier model provided as an argument
     print("\nTraining run with algorithm \n{}".format(clf))
     clf.fit(X_train, y_train)
 
@@ -82,7 +77,11 @@ def benchmark(clf, name=""):
     child_run.log("precision", float(precision))
     child_run.log_image("Confusion Matrix {}".format(name), plot=cm_plot)
 
-    # write model artifact
+    # write model artifacts
+    # create outputs folder if not exists
+    if not os.path.exists(OUTPUTSFOLDER):
+        os.makedirs(OUTPUTSFOLDER)
+        
     model_name = "model" + str(name) + ".pkl"
     filename = os.path.join(OUTPUTSFOLDER, model_name)
     joblib.dump(value=clf, filename=filename)
@@ -107,6 +106,7 @@ for clf, name in (
          "Passive-Aggressive"),
         (KNeighborsClassifier(n_neighbors=10), "kNN"),
         (RandomForestClassifier(), "Random forest")):
+    
     # run benchmarking function for each
     benchmark(clf, name)
 

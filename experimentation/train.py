@@ -13,7 +13,7 @@ from helpers import plot_confusion_matrix
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '--max-depth',
-    type=str,
+    type=int,
     dest='max_depth',
     default=None,
     help='random forest max depth'

@@ -8,7 +8,7 @@ from azureml.core import Workspace, Experiment
 from azureml.train.estimator import Estimator
 from azureml.core.authentication import AzureCliAuthentication
 
-EXPERIMENT_NAME = "newsgroups_train_randomforest_multiple"
+EXPERIMENT_NAME = "newsgroups_train_multiple"
 COMPUTE_TARGET = "local"  # local / myamlcompute
 
 # load Azure ML workspace
