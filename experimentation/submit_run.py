@@ -8,7 +8,7 @@ from azureml.core import Workspace, Experiment
 from azureml.train.estimator import Estimator
 from azureml.core.authentication import AzureCliAuthentication
 
-EXPERIMENT_NAME = "newsgroups_train_randomforest"
+EXPERIMENT_NAME = "diabetes_train"
 COMPUTE_TARGET = "local"  # local / myamlcompute
 
 # load Azure ML workspace
@@ -22,11 +22,7 @@ est = Estimator(
     source_directory=os.path.dirname(os.path.realpath(__file__)),
     compute_target=COMPUTE_TARGET,
     use_docker=False,
-    user_managed=True,
-    script_params={
-        '--max-depth': 3,  
-        '--min-samples-leaf': 2
-    },
+    user_managed=True
     # conda_dependencies_file=os.path.join(
     #     os.path.dirname(os.path.realpath(__file__)),
     #     '../',

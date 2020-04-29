@@ -11,8 +11,10 @@ from azureml.pipeline.steps import PythonScriptStep
 from azureml.core import RunConfiguration
 from azureml.core.authentication import AzureCliAuthentication
 from azureml.data.data_reference import DataReference
+from azureml.pipeline.steps import PythonScriptStep
+from azureml.pipeline.core import PipelineParameter
 
-EXPERIMENT_NAME = "newsgroups_train_pipeline"
+EXPERIMENT_NAME = "train_pipeline"
 COMPUTE_TARGET = "myamlcompute"
 
 # load Azure ML workspace
@@ -31,6 +33,12 @@ intermediate_data = PipelineData(
     name="model",
     datastore=def_blob_store,
     output_path_on_compute="training"
+)
+
+# Pipeline parameters
+pipeline_param = PipelineParameter(
+    name="pipeline_arg",
+    default_value="default_val"
 )
 
 # run configuration
@@ -67,7 +75,8 @@ modelConversionStep = PythonScriptStep(
     source_directory=os.path.dirname(os.path.realpath(__file__)),
     name="Model Conversion",
     arguments=[
-        '--input_data', str(intermediate_data.as_mount())
+        '--input_data', str(intermediate_data.as_mount()),
+        '--pipeline_parameter', pipeline_param
     ],
     inputs=[
         intermediate_data
@@ -91,4 +100,11 @@ pipeline_run = Experiment(
     EXPERIMENT_NAME
 ).submit(training_pipeline)
 
-pipeline_run.wait_for_completion()
+# pipeline_run.wait_for_completion()
+
+# Publish a pipeline
+# Once a Pipeline is published, it can be submitted without the Python code which constructed the Pipeline. 
+# One could also call the pipeline using a REST endpoint.
+training_pipeline.publish(
+    name="example_pipeline"
+)

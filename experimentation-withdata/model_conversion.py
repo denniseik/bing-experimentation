@@ -15,10 +15,16 @@ parser.add_argument(
     default="outputs",
     help="input data"
 )
+parser.add_argument(
+    "--pipeline_parameter",
+    type=str,
+    default="empty pipeline parameter"
+)
 args = parser.parse_args()
 
 # Print data mount location
 print("Input data folder: %s" % args.input_data)
 print("Output data folder: %s" % args.output_data)
+print("Pipeline parameter: %s" % args.pipeline_parameter)
 
 print("My model conversion runner file")
